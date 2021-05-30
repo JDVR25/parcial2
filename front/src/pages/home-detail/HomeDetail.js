@@ -9,7 +9,16 @@ export const HomeDetail = () => {
   const [devices, setDevices] = useState([]);
   let { id } = useParams();
   useEffect(() => {
-    getHomeById(id).then((data) => { setHome(data) });
+    
+    if (!navigator.onLine) {
+      console.log(localStorage.getItem(id));
+      if (localStorage.getItem(id) === null) setHome("loading...");
+      else setHome(JSON.parse(localStorage.getItem(id)));
+    }
+    getHomeById(id).then((data) => { 
+      setHome(data);
+      localStorage.setItem(id, JSON.stringify(data));
+      console.log("Response", JSON.stringify(data)); });
   }, [id]);
   return (
     <div className="container home">

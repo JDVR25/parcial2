@@ -7,7 +7,14 @@ export const HomesList = () => {
   const [homes, setHomes] = useState([]);
 
   useEffect(() => {
-    getHomes().then((data) => setHomes(data));
+    if (!navigator.onLine) {
+      if (localStorage.getItem("homes") === null) setHomes("loading...");
+      else setHomes(JSON.parse(localStorage.getItem("homes")));
+    }
+    getHomes().then((data) => {
+      setHomes(data);
+      localStorage.setItem("homes", JSON.stringify(data));
+      console.log("Response", JSON.stringify(data));});
   }, []);
 
   return (
