@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
 import { FormattedMessage } from "react-intl";
+import { LOCALES } from "../../i18n/locales";
 
 export const Navbar = ({ setLanguage }) => {
   return (
@@ -29,7 +30,13 @@ export const Navbar = ({ setLanguage }) => {
               </Link>
             </div>
             <div className="navbar-nav-controls">
-             {/** here lang selector */  }
+              <Link className="nav-link active" aria-current="page" onClick={() => { setLanguage(LOCALES.SPANISH) }}>
+                <FormattedMessage id="spanish" />
+              </Link>
+              <Link className="nav-link active" aria-current="page" onClick={() => { setLanguage(LOCALES.ENGLISH) }}>
+                <FormattedMessage id="english" />
+              </Link>
+              {/** here lang selector */}
             </div>
           </div>
         </div>

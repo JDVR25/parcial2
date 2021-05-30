@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./HomesList.scss";
 import { getHomes } from "../../services/utils";
 import { Card } from "../../components/card/Card"
+import { FormattedMessage } from "react-intl";
 
 export const HomesList = () => {
   const [homes, setHomes] = useState([]);
@@ -14,13 +15,14 @@ export const HomesList = () => {
     getHomes().then((data) => {
       setHomes(data);
       localStorage.setItem("homes", JSON.stringify(data));
-      console.log("Response", JSON.stringify(data));});
+      console.log("Response", JSON.stringify(data));
+    });
   }, []);
 
   return (
     <div className="container home">
       <div className="row"><h1>
-        Mis espacios
+        <FormattedMessage id="spaces" />
       </h1></div>
       <div className="row">
         {homes && homes.map((home) => <Card className="tarjeta" id={home.id} name={home.name} owner={home.owner} address={home.address} phone={home.phone} type={home.type} isActive={home.isActive} ></Card>)}
