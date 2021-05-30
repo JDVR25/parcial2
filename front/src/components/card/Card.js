@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import "./Card.scss";
 
 export const Card = (props) => {
-  return (
+  console.log(props)
+  return ( 
     <div className="card card-home">
       <Link className="card-home-img-link" to={`/homes/${props.id}`}>
         {props.type === "house" ? (

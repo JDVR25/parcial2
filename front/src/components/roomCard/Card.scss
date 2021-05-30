@@ -1,0 +1,44 @@
+.card-home{
+    display: flex;
+    justify-content: space-between;
+    width: 9rem;
+    height: 10rem;
+    padding: 0.7rem;
+    box-shadow: 2px 2px #b6b6b6;
+    &:not(:first-child){
+      margin-left: .625rem
+    }
+    &-img{
+      &-link{
+        text-align: center;
+      }
+      &-top{
+        height: 5rem;
+        width: 5rem!important;
+        &.loft{
+          width: 3rem!important;
+        }
+      }
+    }
+  
+    &-body{
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      flex: 1;
+      margin-top: 10px;
+      &-description{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        flex: 1;
+      }
+      &-location{
+        display: flex;
+        flex-direction: row-reverse;
+      }
+      .card-text{
+        font-size: 0.8rem;
+      }
+    }
+}

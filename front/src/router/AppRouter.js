@@ -5,6 +5,7 @@ import { Navbar } from "../components/nav/Navbar";
 import { IntlProvider } from "react-intl";
 import { LOCALES } from "../i18n/locales";
 import messages from "../i18n/messages";
+import { HomeDetail } from "../pages/home-detail/HomeDetail";
 
 export const AppRouter = () => {
   const [language, setLanguage] = useState(LOCALES.ENGLISH);
@@ -20,6 +21,7 @@ export const AppRouter = () => {
           <Route exact path="/homes">
             <HomesList />
           </Route>
+          <Route path="/homes/:id" children={<HomeDetail />}/>
         </Switch>
       </Router>
     </IntlProvider>
