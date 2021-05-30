@@ -27,55 +27,68 @@ export const HomeDetail = () => {
 
 
   function drawPie() {
-    if(!drawnPie)
-    {
+    if (!drawnPie) {
       var width = 300;
-    var height = 300;
-    var radius = Math.min(width, height) / 2;
+      var height = 300;
+      var radius = Math.min(width, height) / 2;
 
-    var color = d3.scaleOrdinal()
-    .range(["#5EC9A9", "#AFE4B8", "#539CC6", "#323595", "#C2D5EB"]);
+      var color = d3.scaleOrdinal()
+        .range(["#5EC9A9", "#AFE4B8", "#539CC6", "#323595", "#C2D5EB"]);
 
-    var pie = d3.pie()
-      .value(function (d) {
-        return d.powerUsage.value;
-      })(home.rooms);
+      var pie = d3.pie()
+        .value(function (d) {
+          return d.powerUsage.value;
+        })(home.rooms);
 
-    var arc = d3.arc()
-      .outerRadius(radius - 10)
-      .innerRadius(0);
+      var arc = d3.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(0);
 
-    var svg = d3.select("#pie")
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height)
-      .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+      var svg = d3.select("#pie")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    var g = svg.selectAll("arc")
-      .data(pie)
-      .enter().append("g")
-      .attr("class", "arc")
-      .on('mouseover', function (d, i) {
-        d3.select(this).transition()
-          .duration('50')
-          .attr('opacity', '.95');
-      })
-      .on('mouseout', function (d, i) {
-        d3.select(this).transition()
-          .duration('50')
-          .attr('opacity', '1');
-      })
-      .attr('transform', 'translate(0, 0)');
+      var div = d3.select("body").append("div")
+        .attr("class", "tooltip-pie")
+        .style("opacity", 0);
 
-    g.append("path")
-      .attr("d", arc)
-      .style("fill", function (d) {
-        return color(d.data.name);
-      });
-    setPie(true);
+      var g = svg.selectAll("arc")
+        .data(pie)
+        .enter().append("g")
+        .attr("class", "arc")
+        .on('mouseover', function (d, i) {
+          d3.select(this).transition()
+            .duration('50')
+            .attr('opacity', '.95');
+          div.transition()
+            .duration(50)
+            .style("opacity", 1);
+          let num = i.data.name + ":" + i.data.powerUsage.value + i.data.powerUsage.unit;
+          div.html(num)
+            .style("left", (d.pageX + 10) + "px")
+            .style("top", (d.pageY - 15) + "px");
+        })
+        .on('mouseout', function (d, i) {
+          d3.select(this).transition()
+            .duration('50')
+            .attr('opacity', '1');
+          div.transition()
+            .duration('50')
+            .style("opacity", 0);
+        })
+        .attr('transform', 'translate(0, 0)');
+
+      g.append("path")
+        .attr("d", arc)
+        .style("fill", function (d) {
+          return color(d.data.name);
+        });
+      setPie(true);
     }
-    
+
   }
 
 
@@ -113,7 +126,7 @@ export const HomeDetail = () => {
       <div className="row"><h3>
         <FormattedMessage id="stats" /></h3>
         <div id="pie">
-          { home.rooms && drawPie()}
+          {home.rooms && drawPie()}
         </div>
       </div>
     </div>
